@@ -1,0 +1,15 @@
+Comando SQL para criar a base de dados
+CREATE DATABASE achados_e_perdidos CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+
+
+tabela: adm
+campos: nome, cpf, email, senha
+Criar a model administrador: npx sequelize-cli model:generate --name Administradores --attributes name:string,cpf:string,email:string,senha:string
+
+tabela: achado
+campos: nome_item, descricao, quem_achou, local, data, hora_aproximada, dono_encontrado
+Criar a model achados: npx sequelize-cli model:generate --name Administradores --attributes descricao:string,quem_achou:string,local:string,data:date,hora_aproximada:string,dono_encontrado:boolean
+
+tabela: perdido
+campos: nome_item, descricao, nome, email, telefone, item_encontrado
+Criar a model perdidos: npx sequelize-cli model:generate --name Administradores --attributes nome_item:string,descricao:string,nome:string,email:string,telefone:string,item_encontrado:boolean
