@@ -1,0 +1,28 @@
+.container__card-item {
+  max-width: 1252px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // 3 colunas com largura igual
+  gap: 16px; // Espaçamento entre os cards
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr); // 2 colunas com largura igual em telas menores
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 2fr; // 1 coluna em telas muito pequenas
+  }
+}
+
+.card-item {
+  width: 299px;
+  height: 325px;
+  border: 1px solid red;
+}
+
+.dentro-card {
+  height: fit-content;
+  padding: 10px 10px 20px;
+}
