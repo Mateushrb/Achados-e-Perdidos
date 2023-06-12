@@ -20,7 +20,7 @@ router.get("/administradores", async (req, res) => {
     let lastPage = 1;
 
     // Contar a quantidade de registros no banco de dados
-    const countAdm = await db.Administrador.count();
+    const countAdm = await db.Administradores.count();
     //console.log(countUser);
 
     // Acessa o IF quando encontrar registro no banco de dados
@@ -36,7 +36,7 @@ router.get("/administradores", async (req, res) => {
     }
 
     // recuperar todos os usuários do banco de dados
-    const administradores = await db.Administrador.findAll({
+    const administradores = await db.Administradores.findAll({
 
         // Indicar quais colunas recuperar
         attributes: ['id', 'name', 'cpf', 'email', 'senha'],
@@ -88,7 +88,7 @@ router.get("/administradores/:id", async (req, res) => {
     const { id } = req.params;
 
     // Recuperar o registro do banco de dados
-    const adm = await db.Administrador.findOne({
+    const adm = await db.Administradores.findOne({
         //Indicar quais colunas recuperar
         attributes: ['id', 'name', 'cpf', 'email', 'senha', 'createdAt', 'updatedAt'],
 
@@ -129,7 +129,7 @@ router.post("/administradores", async (req, res) => {
     console.log(dados);
 
     // Salvar no banco de dados
-    await db.Administrador.create(dados).then((dadosAdministrador) => {
+    await db.Administradores.create(dados).then((dadosAdministrador) => {
         // Pausar o processamento e retornar os dados em formato de objeto
         return res.json({
             mensagem: "Administrador cadastrado com sucesso!",
@@ -170,7 +170,7 @@ router.put("/administradores/:id", async (req, res) => {
     const { id } = req.params;
     
     // Editar no banco de dados
-    const [rowsAffected] = await db.Administrador.update(dados, { where: {id: id}})
+    const [rowsAffected] = await db.Administradores.update(dados, { where: {id: id}})
     
     if (rowsAffected === 0) {
         // Nenhum registro foi alterado, então trata como um erro
@@ -194,7 +194,7 @@ router.delete("/administradores/:id", async (req, res) => {
     const { id } = req.params;
     
     // Apagar o usuário no banco de dados utilizando a MODELS users
-    const rowsAffected = await db.Administrador.destroy({
+    const rowsAffected = await db.Administradores.destroy({
         // Acrescentar o WHERE na instrução SQL indicando qual registro excluir no BD
         where: {id}
     })
