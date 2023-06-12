@@ -24,20 +24,20 @@ ou
 
 Rotas para utilizar na aplicação
 
-Administrador
-Cadastrar administrador: POST http://localhost:8080/administradores
-Listar administradores: GET http://localhost:8080/administradores?page=1
-Editar administrador: PUT http://localhost:8080/administradores/id
+Administrador  
+Cadastrar administrador: POST http://localhost:8080/administradores  
+Listar administradores: GET http://localhost:8080/administradores?page=1  
+Editar administrador: PUT http://localhost:8080/administradores/id  
 Apagar administrador: DELETE http://localhost:8080/administradores/id
 
-Achados
-Cadastrar achados: POST http://localhost:8080/achados
-Listar achados: GET http://localhost:8080/achados?page=1
-Editar achados: PUT http://localhost:8080/achados/id
-Apagar achados: DELETE http://localhost:8080/achados/id
+Achados  
+Cadastrar achados: POST http://localhost:8080/achados  
+Listar achados: GET http://localhost:8080/achados?page=1  
+Editar achados: PUT http://localhost:8080/achados/id  
+Apagar achados: DELETE http://localhost:8080/achados/id  
 
-Perdidos
-Cadastrar perdidos: POST http://localhost:8080/perdidos
-Listar perdidos: GET http://localhost:8080/perdidos?page=1
-Editar perdidos: PUT http://localhost:8080/perdidos/id
-Apagar perdidos: DELETE http://localhost:8080/perdidos/id
+Perdidos  
+Cadastrar perdidos: POST http://localhost:8080/perdidos  
+Listar perdidos: GET http://localhost:8080/perdidos?page=1  
+Editar perdidos: PUT http://localhost:8080/perdidos/id  
+Apagar perdidos: DELETE http://localhost:8080/perdidos/id  
