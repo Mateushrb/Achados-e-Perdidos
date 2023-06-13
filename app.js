@@ -11,13 +11,11 @@ app.use(express.json());
 //const db = require("./db/models")
 
 // Incluir as CONTROLLERS
-const users = require('./controllers/users');
 const adms = require('./controllers/administrador');
 const achados = require('./controllers/achados');
 const perdidos = require('./controllers/perdidos');
 
 // Criar as rotas
-app.use('/', users);
 app.use('/', adms);
 app.use('/', achados);
 app.use('/', perdidos);
