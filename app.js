@@ -4,6 +4,10 @@ const express = require("express");
 // Chamar a função express
 const app = express();
 
+// cors
+const cors = require('cors');
+app.use(cors());
+
 // Criar o middleware para receber os dados no corpo da requisição
 app.use(express.json());
 
