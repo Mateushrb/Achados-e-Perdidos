@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .form input {
+    padding: 5px;
+  }
+  
+  .form button {
+    padding: 5px 10px;
+  }
+  
+  .form button:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  

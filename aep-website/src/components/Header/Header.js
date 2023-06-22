@@ -23,7 +23,7 @@ function Header() {
             </li>
             <li className="nav__item">
               <a href="/login" className="nav__link">
-                Login
+                Administrador
               </a>
             </li>
           </ul>

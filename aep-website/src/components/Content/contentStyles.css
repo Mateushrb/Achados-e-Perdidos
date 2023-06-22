@@ -1,6 +1,6 @@
 .container__item {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 10px;
   max-width: 1252px;
   margin: 0 auto;
