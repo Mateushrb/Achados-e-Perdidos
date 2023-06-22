@@ -1,5 +1,5 @@
 // Incluir as bibliotecas
-// Gerencia as requisições, rotas e URLs, entre outras funcionalidades
+// Gerencia as requisições, rotas e URLs, entre outras funcinalidades
 const express = require('express');
 // Chamar a função express
 const router = express.Router();
@@ -7,39 +7,39 @@ const router = express.Router();
 const db = require('./../db/models');
 
 // Criar a rota listar
-router.get("/achados", async (req, res) => {
+router.get("/administradores", async (req, res) => {
 
     // Receber o número da página, quando não é enviado o número da página é atribuido 1
     const { page = 1 } = req.query;
     //console.log(page);
 
     // Limite de registros em cada página
-    const limite = 10;
+    const limite = 9999;
 
     // Variável com o número da última página
     let lastPage = 1;
 
     // Contar a quantidade de registros no banco de dados
-    const countAchados = await db.Achados.count();
+    const countAdm = await db.Administradores.count();
     //console.log(countUser);
 
     // Acessa o IF quando encontrar registro no banco de dados
-    if (countAchados !== 0) {
+    if (countAdm !== 0) {
         // Calcular a última página
-        lastPage = Math.ceil(countAchados / limite);
+        lastPage = Math.ceil(countAdm / limite);
         //console.log(lastPage);
     } else {
         // Pausar o processamento e retornar a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Nenhum item achado encontrado!"
+            mensagem: "Erro: Nenhum administrador encontrado!"
         });
     }
 
-    // recuperar todos os achados do banco de dados
-    const achados = await db.Achados.findAll({
+    // recuperar todos os usuários do banco de dados
+    const administradores = await db.Administradores.findAll({
 
         // Indicar quais colunas recuperar
-        attributes: ['id', 'nome_item', 'descricao', 'quem_achou', 'local', 'data', 'hora_aproximada', 'dono_encontrado'],
+        attributes: ['id', 'name', 'cpf', 'email', 'senha'],
 
         // Ordenar os registros pela coluna id na forma decrescente
         order: [['id', 'ASC']],
@@ -50,11 +50,11 @@ router.get("/achados", async (req, res) => {
     });
 
     // Acessa o IF se encontrar o registro no banco de dados
-    if (achados) {
+    if (administradores) {
         // Criar objeto com as informações para paginação
         let paginacao = {
             // Caminho 
-            path: '/achados',
+            path: '/administradores',
             // Página atual
             page,
             // URL da página anterior
@@ -64,93 +64,81 @@ router.get("/achados", async (req, res) => {
             // Última página
             lastPage,
             // Quantidade de registros
-            total: countAchados
+            total: countAdm
         }
 
-        // Pausar o processamento e retornar os dados em formato de objeto
+        // Pausa o processamento e retorna os dados em formato de objeto
         return res.json({
-            achados,
+            administradores,
             paginacao
         });
     } else {
-        // Pausar o processamento e retornar a mensagem de erro
+        // Pausa o processamento e retorna a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Item achado não cadastrado com sucesso!"
+            mensagem: "Erro: Administrador não cadastrado com sucesso!"
         });
     }
 });
 
-// Criar a rota visualizar e receber o parâmetro id enviado na URL
-// Endereço para acessar através da aplicação externa: http://localhost:8080/achados/2
-router.get("/achados/:id", async (req, res) => {
-    
+// Criar a rota visualizar a receber o parâmetro id enviado na URL
+// Endereço para acessar através da aplicação externa: http://localhost:8080/administradores/2
+router.get("/administradores/:id", async (req, res) => {
+
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
 
     // Recuperar o registro do banco de dados
-    const achado = await db.Achados.findOne({
-        // Indicar quais colunas recuperar
-        attributes: ['id', 'nome_item', 'descricao', 'quem_achou', 'local', 'data', 'hora_aproximada', 'dono_encontrado', 'createdAt', 'updatedAt'],
+    const adm = await db.Administradores.findOne({
+        //Indicar quais colunas recuperar
+        attributes: ['id', 'name', 'cpf', 'email', 'senha', 'createdAt', 'updatedAt'],
 
         // Acrescentando condição para indicar qual registro deve ser encontrado do banco de dados
         where: {id}
     });
 
     // Acessa o IF se encontrar o registro no banco de dados
-    if (achado) {
+    if (adm) {
         // Pausar o processamento e retornar os dados
         return res.json({
-            achado: achado.dataValues
+            adm: adm.dataValues
         })
     } else {
         // Pausar o processamento e retornar a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Item achado não encontrado!"
+            mensagem: "Erro: Administrador não encontrado!"
         })
     }
 });
 
-// Criar a rota cadastrar
+// Criar a rota cadastrar administrador
 /*
 // A aplicação externa deve indicar que está enviando os dados em formato de objeto Content-Type: application/json
 
 // Dados em formato de objeto
 {
-    "nome_item": "Celular",
-    "descricao": "Celular modelo X perdido encontrado ao lado do banco em frente a biblioteca",
-    "quem_achou": "Mateus",
-    "local": "Em frente a biblioteca",
-    "data": "27-05-2023",
-    "hora_aproximada": "10h54",
-    "dono_encontrado": "false"
-}
-{
-	"nome_item": "Caderneta",
-	"descricao": "Caderneta do SENAI com informações na primeira página sobre estudos de robótica",
-	"quem_achou": "Mateus",
-	"local": "Em frente a cantina",
-	"data": null,
-	"hora_aproximada": "10h54",
-	"dono_encontrado": true
+    "name": "Mateus",
+    "cpf": "123.456.789-10",
+    "email": "mateus@gmail.com",
+    "senha": "minhasenha"
 }
 */
-router.post("/achados", async (req, res) => {
+router.post("/administradores", async (req, res) => {
 
     // Receber os dados enviados no corpo da requisição
     let dados = req.body;
     console.log(dados);
 
     // Salvar no banco de dados
-    await db.Achados.create(dados).then((dadosUsuario) => {
+    await db.Administradores.create(dados).then((dadosAdministrador) => {
         // Pausar o processamento e retornar os dados em formato de objeto
         return res.json({
-            mensagem: "Item achado cadastrado com sucesso!",
-            dadosUsuario
+            mensagem: "Administrador cadastrado com sucesso!",
+            dadosAdministrador
         });
     }).catch((ERRO) => {
         // Pausar o processamento e retornar a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Não foi possível cadastrar o item achado!",
+            mensagem: "Erro: Não foi possível cadastrar o administrador!",
             ERRO
         });
     });
@@ -158,7 +146,7 @@ router.post("/achados", async (req, res) => {
 
 // Criar a rota editar
 
-// Endereço para acessar através da aplicação externa: http://localhost:8080/users
+// Endereço para acessar através da aplicação externa: http://localhost:8080/administradores
 
 /*
 // A aplicação externa deve indicar que está enviado os dados em formato de objeto
@@ -167,16 +155,13 @@ Content-Type: application/json
 // Dados em formato de objeto
 {
     "id": 1,
-	"nome_item": "Celular",
-	"descricao": "Celular modelo X perdido encontrado ao lado do banco em frente a biblioteca",
-	"quem_achou": "Mateus",
-	"local": "Em frente a biblioteca",
-	"data": "2023-05-25",
-	"hora_aproximada": "10h54",
-	"dono_encontrado": false
+    "name": "Mateus",
+    "cpf": "123.456.789-10",
+    "email": "mateus@gmail.com",
+    "senha": "minhasenha"
 }
 */
-router.put("/achados/:id", async (req, res) => {
+router.put("/administradores/:id", async (req, res) => {
 
     // Receber os dados enviado no corpo da requisição
     let dados = req.body;
@@ -185,31 +170,31 @@ router.put("/achados/:id", async (req, res) => {
     const { id } = req.params;
     
     // Editar no banco de dados
-    const [rowsAffected] = await db.Achados.update(dados, { where: {id: id}})
+    const [rowsAffected] = await db.Administradores.update(dados, { where: {id: id}})
     
     if (rowsAffected === 0) {
         // Nenhum registro foi alterado, então trata como um erro
         return res.status(400).json({
-            mensagem: "Erro: Item achado não encontrado!"
+            mensagem: "Erro: Administrador não encontrado!"
         });
     }
 
     // Pausar o processamento e retornar a mensagem
     return res.json({
-        mensagem: "Item achado editado com sucesso!"
+        mensagem: "Administrador editado com sucesso!"
     })
     
 });
 
 // Criar a rota apagar e receber o parâmetro id enviado na URL
-// Endereço para acessar através da aplicação externa: http://localhost:8080/achados/2
-router.delete("/achados/:id", async (req, res) => {
+// Endereço para acessar através da aplicação externa: http://localhost:8080/administradores/1
+router.delete("/administradores/:id", async (req, res) => {
 
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
     
     // Apagar o usuário no banco de dados utilizando a MODELS users
-    const rowsAffected = await db.Achados.destroy({
+    const rowsAffected = await db.Administradores.destroy({
         // Acrescentar o WHERE na instrução SQL indicando qual registro excluir no BD
         where: {id}
     })
@@ -217,16 +202,16 @@ router.delete("/achados/:id", async (req, res) => {
     if (rowsAffected === 0) {
         // Nenhum registro foi alterado, então trata como um erro
         return res.status(400).json({
-            mensagem: "Erro: Item achado não encontrado!"
+            mensagem: "Erro: Administrador não encontrado!"
         });
     }
 
     // Pausar o processamento e retornar a mensagem
     return res.json({
-        mensagem: "Item achado apagado com sucesso!"
+        mensagem: "Administrador apagado com sucesso!"
     });
 
 });
 
-// Exportar a instrução que está dentro da constante router
+// Exportar a função que está dentro da constante router
 module.exports = router;

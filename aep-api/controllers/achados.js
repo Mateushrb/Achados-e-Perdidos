@@ -6,40 +6,40 @@ const router = express.Router();
 // Incluir o arquivo que possui a conexão com o banco de dados
 const db = require('./../db/models');
 
-// Criar rota listar
-router.get("/perdidos", async (req, res) => {
+// Criar a rota listar
+router.get("/achados", async (req, res) => {
 
     // Receber o número da página, quando não é enviado o número da página é atribuido 1
     const { page = 1 } = req.query;
     //console.log(page);
 
     // Limite de registros em cada página
-    const limite = 10;
+    const limite = 9999;
 
     // Variável com o número da última página
     let lastPage = 1;
 
     // Contar a quantidade de registros no banco de dados
-    const countPerdidos = await db.Perdidos.count();
+    const countAchados = await db.Achados.count();
     //console.log(countUser);
 
     // Acessa o IF quando encontrar registro no banco de dados
-    if (countPerdidos !== 0) {
+    if (countAchados !== 0) {
         // Calcular a última página
-        lastPage = Math.ceil(countPerdidos / limite);
+        lastPage = Math.ceil(countAchados / limite);
         //console.log(lastPage);
     } else {
         // Pausar o processamento e retornar a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Nenhum item perdido encontrado!"
+            mensagem: "Erro: Nenhum item achado encontrado!"
         });
     }
 
-    // Recuperar todos os itens perdidos do banco de dados
-    const perdidos = await db.Perdidos.findAll({
+    // recuperar todos os achados do banco de dados
+    const achados = await db.Achados.findAll({
 
         // Indicar quais colunas recuperar
-        attributes: ['id', 'nome_item', 'descricao', 'nome', 'email', 'telefone', 'item_encontrado'],
+        attributes: ['id', 'nome_item', 'descricao', 'quem_achou', 'local', 'data', 'hora_aproximada', 'dono_encontrado'],
 
         // Ordenar os registros pela coluna id na forma decrescente
         order: [['id', 'ASC']],
@@ -50,11 +50,11 @@ router.get("/perdidos", async (req, res) => {
     });
 
     // Acessa o IF se encontrar o registro no banco de dados
-    if (perdidos) {
+    if (achados) {
         // Criar objeto com as informações para paginação
         let paginacao = {
             // Caminho 
-            path: '/perdidos',
+            path: '/achados',
             // Página atual
             page,
             // URL da página anterior
@@ -64,48 +64,48 @@ router.get("/perdidos", async (req, res) => {
             // Última página
             lastPage,
             // Quantidade de registros
-            total: countPerdidos
+            total: countAchados
         }
 
         // Pausar o processamento e retornar os dados em formato de objeto
         return res.json({
-            perdidos,
+            achados,
             paginacao
         });
     } else {
-        // Pausar o processamento e retornar mensagem de erro
+        // Pausar o processamento e retornar a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Item perdido não cadastrado com sucesso!"
+            mensagem: "Erro: Item achado não cadastrado com sucesso!"
         });
     }
 });
 
 // Criar a rota visualizar e receber o parâmetro id enviado na URL
-// Endereço para acessar através da aplicação externa: http://localhost:8080/perdidos/2
-router.get("/perdidos/:id", async (req, res) => {
+// Endereço para acessar através da aplicação externa: http://localhost:8080/achados/2
+router.get("/achados/:id", async (req, res) => {
     
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
 
     // Recuperar o registro do banco de dados
-    const perdido = await db.Perdidos.findOne({
-        //Indicar quais colunas recuperar
-        attributes: ['id', 'nome_item', 'descricao', 'nome', 'email', 'telefone', 'item_encontrado', 'createdAt', 'updatedAt'],
+    const achado = await db.Achados.findOne({
+        // Indicar quais colunas recuperar
+        attributes: ['id', 'nome_item', 'descricao', 'quem_achou', 'local', 'data', 'hora_aproximada', 'dono_encontrado', 'createdAt', 'updatedAt'],
 
-        // Acrescentando condição para indicar qual registro deve ser retornado do banco de dados
+        // Acrescentando condição para indicar qual registro deve ser encontrado do banco de dados
         where: {id}
     });
 
-    // Acessa o IF se encontrar o registro no banco de dados 
-    if (perdido) {
+    // Acessa o IF se encontrar o registro no banco de dados
+    if (achado) {
         // Pausar o processamento e retornar os dados
         return res.json({
-            perdido: perdido.dataValues
+            achado: achado.dataValues
         })
     } else {
         // Pausar o processamento e retornar a mensagem de erro
         return res.status(400).json({
-            mensagem: "Erro: Item perdido não encontrado!"
+            mensagem: "Erro: Item achado não encontrado!"
         })
     }
 });
@@ -116,39 +116,41 @@ router.get("/perdidos/:id", async (req, res) => {
 
 // Dados em formato de objeto
 {
-    "nome_item": "Lancheira",
-    "descricao": "Lancheira da cor rosa e tampa transparente",
-    "nome": "Mateus",
-    "email": "mateus@gmail.com",
-    "telefone": "48911112222",
-    "item_encontrado": "true"
+    "nome_item": "Celular",
+    "descricao": "Celular modelo X perdido encontrado ao lado do banco em frente a biblioteca",
+    "quem_achou": "Mateus",
+    "local": "Em frente a biblioteca",
+    "data": "27-05-2023",
+    "hora_aproximada": "10h54",
+    "dono_encontrado": "false"
 }
 {
-    "nome_item": "Copo de silicone",
-    "descricao": "Copo de silicone na cor azul",
-    "nome": "Mateus",
-    "email": "mateus@gmail.com",
-    "telefone": "48911112222",
-    "item_encontrado": "false"
+	"nome_item": "Caderneta",
+	"descricao": "Caderneta do SENAI com informações na primeira página sobre estudos de robótica",
+	"quem_achou": "Mateus",
+	"local": "Em frente a cantina",
+	"data": null,
+	"hora_aproximada": "10h54",
+	"dono_encontrado": true
 }
 */
-router.post("/perdidos", async (req, res) => {
-    
+router.post("/achados", async (req, res) => {
+
     // Receber os dados enviados no corpo da requisição
     let dados = req.body;
     console.log(dados);
 
-    // Salvar no banco de dados 
-    await db.Perdidos.create(dados).then((dadosUsuario) => {
+    // Salvar no banco de dados
+    await db.Achados.create(dados).then((dadosUsuario) => {
         // Pausar o processamento e retornar os dados em formato de objeto
         return res.json({
-            mensagem: "Item perdido cadastrado com sucesso!",
+            mensagem: "Item achado cadastrado com sucesso!",
             dadosUsuario
         });
     }).catch((ERRO) => {
         // Pausar o processamento e retornar a mensagem de erro
-        return res.json({
-            mensagem: "Erro: Não foi possível cadastrar o item perdido!",
+        return res.status(400).json({
+            mensagem: "Erro: Não foi possível cadastrar o item achado!",
             ERRO
         });
     });
@@ -163,18 +165,18 @@ router.post("/perdidos", async (req, res) => {
 Content-Type: application/json
 
 // Dados em formato de objeto
-
 {
-    "id": 2,
-	"nome_item": "Copo de silicone",
-	"descricao": "Copo de silicone na cor azul",
-	"nome": "Mateus",
-	"email": "mateus@gmail.com",
-	"telefone": "48911112222",
-	"item_encontrado": false
+    "id": 1,
+	"nome_item": "Celular",
+	"descricao": "Celular modelo X perdido encontrado ao lado do banco em frente a biblioteca",
+	"quem_achou": "Mateus",
+	"local": "Em frente a biblioteca",
+	"data": "2023-05-25",
+	"hora_aproximada": "10h54",
+	"dono_encontrado": false
 }
 */
-router.put("/perdidos/:id", async (req, res) => {
+router.put("/achados/:id", async (req, res) => {
 
     // Receber os dados enviado no corpo da requisição
     let dados = req.body;
@@ -183,31 +185,31 @@ router.put("/perdidos/:id", async (req, res) => {
     const { id } = req.params;
     
     // Editar no banco de dados
-    const [rowsAffected] = await db.Perdidos.update(dados, { where: {id: id}})
-    console.log(rowsAffected)
+    const [rowsAffected] = await db.Achados.update(dados, { where: {id: id}})
+    
     if (rowsAffected === 0) {
         // Nenhum registro foi alterado, então trata como um erro
         return res.status(400).json({
-            mensagem: "Erro: Item perdido não encontrado!"
+            mensagem: "Erro: Item achado não encontrado!"
         });
     }
 
     // Pausar o processamento e retornar a mensagem
     return res.json({
-        mensagem: "Item perdido editado com sucesso!"
+        mensagem: "Item achado editado com sucesso!"
     })
     
 });
 
 // Criar a rota apagar e receber o parâmetro id enviado na URL
-// Endereço para acessar através da aplicação externa: http://localhost:8080/perdidos/2
-router.delete("/perdidos/:id", async (req, res) => {
+// Endereço para acessar através da aplicação externa: http://localhost:8080/achados/2
+router.delete("/achados/:id", async (req, res) => {
 
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
     
     // Apagar o usuário no banco de dados utilizando a MODELS users
-    const rowsAffected = await db.Perdidos.destroy({
+    const rowsAffected = await db.Achados.destroy({
         // Acrescentar o WHERE na instrução SQL indicando qual registro excluir no BD
         where: {id}
     })
@@ -215,13 +217,13 @@ router.delete("/perdidos/:id", async (req, res) => {
     if (rowsAffected === 0) {
         // Nenhum registro foi alterado, então trata como um erro
         return res.status(400).json({
-            mensagem: "Erro: Item perdido não encontrado!"
+            mensagem: "Erro: Item achado não encontrado!"
         });
     }
 
     // Pausar o processamento e retornar a mensagem
     return res.json({
-        mensagem: "Item perdido apagado com sucesso!"
+        mensagem: "Item achado apagado com sucesso!"
     });
 
 });
