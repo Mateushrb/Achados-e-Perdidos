@@ -14,7 +14,7 @@ router.get("/administradores", async (req, res) => {
     //console.log(page);
 
     // Limite de registros em cada página
-    const limite = 9999;
+    const limite = 10;
 
     // Variável com o número da última página
     let lastPage = 1;
