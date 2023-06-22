@@ -4,44 +4,36 @@ import './AchadosStyles.css'
 
 
 const ListarAchados = () => {
-  const [products, setProducts] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
+    fetch('http://45.235.53.125:8080/achados')
+      .then((response) => response.json())
+      .then((json) => setData(json.achados));
   }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('http://45.235.53.125:8080/achados');
-      const data = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.log('Error fetching products:', error);
-    }
-  };
 
   return (
     <>
       <DashboardAdmin />
       <div className='table__container-achados'>
-        <h2>Lista de itens Achados</h2>
+        <h2>Lista de itens Achados 📄</h2>
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Item</th>
-              <th>Data</th>
               <th>Hora</th>
+              <th>Quem achou</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.quantity}</td>
+            {data.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.nome_item}</td>
+                <td>{item.hora_aproximada}</td>
+                <td>{item.quem_achou}</td>
                 <td>
                 </td>
               </tr>

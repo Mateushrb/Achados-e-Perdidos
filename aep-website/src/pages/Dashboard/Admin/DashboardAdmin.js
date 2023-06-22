@@ -8,7 +8,7 @@ const DashboardAdmin = () => {
       <Header />
       <div className="dashboard__container">
         <div className="dashboard__sidebar">
-          <p className='dashboar__paragraph'>Bem-vindo ao painel de controle!</p>
+          <p className='dashboar__paragraph'>Bem-vindo ao painel de controle! 🌟</p>
           <div className='dashboard-menu'>
             <nav className='page__menu'>
               <ul class="menu__list">
