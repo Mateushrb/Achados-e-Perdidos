@@ -1,38 +1,16 @@
-import React, { useState } from 'react';
-import './LoginStyles.css'
+import React from 'react';
 
-const LoginForm = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onLogin(username, password);
-  };
-
+const LoginForm = ({ handleEmailChange, handlePasswordChange, handleSubmit }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Administrador"
-        value={username}
-        onChange={handleUsernameChange}
-      />
-      <input
-        type="password"
-        placeholder="Senha"
-        value={password}
-        onChange={handlePasswordChange}
-      />
-      <button type="submit">Entrar</button>
+    <form className='container__login-form' onSubmit={handleSubmit}>
+      <h2>Admin Login</h2>
+      <label htmlFor="email">E-mail:</label>
+      <input type="email" id="email" onChange={handleEmailChange} />
+
+      <label htmlFor="password">Senha:</label>
+      <input type="password" id="password" onChange={handlePasswordChange} />
+
+      <button className='btn__login-form' type="submit">Login</button>
     </form>
   );
 };
