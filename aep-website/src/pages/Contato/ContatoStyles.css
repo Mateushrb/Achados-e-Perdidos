@@ -1,0 +1,77 @@
+.section__contato {
+    max-width: 1252px;
+    margin: 0 auto;
+    padding: 0 0 30px;
+    width: 100%;
+}
+
+.container__contato {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    margin-top: 50px;
+}
+
+.container__dados h2 {
+    margin-bottom: 30px;
+}
+
+.contato-endereco {
+    margin-bottom: 30px;
+    background-color: rgb(255, 255, 255);
+    color: rgba(55, 56, 150, 1);
+    padding: 25px 60px;
+    box-shadow: 0 5px 10px rgba(20, 18, 30, 0.05);
+    border-radius: 1px;
+    display: block;
+    transition: all 0.4s;
+    height: 100%;
+}
+
+.contato-endereco:hover {
+    box-shadow: 0 8px 12px rgba(0, 62, 59, 0.12);
+    -webkit-transform: translateY(-4px);
+    -moz-transform: translateY(-4px);
+    transform: translateY(-4px);
+    transform: scale(1.05);
+}
+
+.contato__redes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.contato-meios {
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contato-meios a {
+    font-size: 18px;
+    text-decoration: none;
+    color: #000;
+    font-weight: 700;
+}
+
+.contato-meios a:hover {
+    color: #373896;
+}
+
+.container__icon-contato {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.container__icon-contato img {
+    width: 25px;
+}
+
+.dados p {
+    font-size: 18px;
+    color: #000;
+    font-weight: 700;
+}

@@ -1,0 +1,23 @@
+.button__container {
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    box-sizing: border-box;
+    transition: 0.1s;
+    min-width: 8rem;
+}
+
+.button__container:hover, 
+.button__container:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(170, 255, 170);
+}
+
+.button__container:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
