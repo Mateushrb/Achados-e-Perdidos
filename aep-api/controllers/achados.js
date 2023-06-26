@@ -5,6 +5,8 @@ const express = require('express');
 const router = express.Router();
 // Incluir o arquivo que possui a conexão com o banco de dados
 const db = require('./../db/models');
+// Restrição de rota
+const { eAdmin } = require('./../middlewares/auth');
 
 // Criar a rota listar
 router.get("/achados", async (req, res) => {
@@ -134,7 +136,7 @@ router.get("/achados/:id", async (req, res) => {
 	"dono_encontrado": true
 }
 */
-router.post("/achados", async (req, res) => {
+router.post("/achados", eAdmin, async (req, res) => {
 
     // Receber os dados enviados no corpo da requisição
     let dados = req.body;
@@ -176,7 +178,7 @@ Content-Type: application/json
 	"dono_encontrado": false
 }
 */
-router.put("/achados/:id", async (req, res) => {
+router.put("/achados/:id", eAdmin, async (req, res) => {
 
     // Receber os dados enviado no corpo da requisição
     let dados = req.body;
@@ -203,7 +205,7 @@ router.put("/achados/:id", async (req, res) => {
 
 // Criar a rota apagar e receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa: http://localhost:8080/achados/2
-router.delete("/achados/:id", async (req, res) => {
+router.delete("/achados/:id", eAdmin, async (req, res) => {
 
     // Receber o parâmetro enviado na URL
     const { id } = req.params;

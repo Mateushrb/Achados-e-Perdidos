@@ -5,9 +5,16 @@ const express = require('express');
 const router = express.Router();
 // Incluir o arquivo que possui a conexão com o banco de dados
 const db = require('./../db/models');
+// Biblioteca de criptografia bcrypt
+const bcrypt = require('bcryptjs');
+// Biblioteca de gerenciamento de token JwonWebToken
+const jwt = require('jsonwebtoken');
+// Restrição de rota
+const { eAdmin } = require('./../middlewares/auth');
+
 
 // Criar a rota listar
-router.get("/administradores", async (req, res) => {
+router.get("/administradores", eAdmin, async (req, res) => {
 
     // Receber o número da página, quando não é enviado o número da página é atribuido 1
     const { page = 1 } = req.query;
@@ -82,7 +89,7 @@ router.get("/administradores", async (req, res) => {
 
 // Criar a rota visualizar a receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa: http://localhost:8080/administradores/2
-router.get("/administradores/:id", async (req, res) => {
+router.get("/administradores/:id", eAdmin, async (req, res) => {
 
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
@@ -122,10 +129,14 @@ router.get("/administradores/:id", async (req, res) => {
     "senha": "minhasenha"
 }
 */
-router.post("/administradores", async (req, res) => {
+router.post("/administradores", eAdmin, async (req, res) => {
 
     // Receber os dados enviados no corpo da requisição
     let dados = req.body;
+
+    // Criptografar a senha
+    dados.senha = await bcrypt.hash(dados.senha, 8);
+
     console.log(dados);
 
     // Salvar no banco de dados
@@ -161,10 +172,13 @@ Content-Type: application/json
     "senha": "minhasenha"
 }
 */
-router.put("/administradores/:id", async (req, res) => {
+router.put("/administradores/:id", eAdmin, async (req, res) => {
 
     // Receber os dados enviado no corpo da requisição
     let dados = req.body;
+
+    // Transformar senha em hash
+    dados.senha = await bcrypt.hash(dados.senha, 8);
 
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
@@ -188,7 +202,7 @@ router.put("/administradores/:id", async (req, res) => {
 
 // Criar a rota apagar e receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa: http://localhost:8080/administradores/1
-router.delete("/administradores/:id", async (req, res) => {
+router.delete("/administradores/:id", eAdmin, async (req, res) => {
 
     // Receber o parâmetro enviado na URL
     const { id } = req.params;
@@ -212,6 +226,44 @@ router.delete("/administradores/:id", async (req, res) => {
     });
 
 });
+
+// Criar a rota de login para receber o token
+router.post("/administradores/login", async (req,res) => {
+    const admin = await db.Administradores.findOne({
+        attributes: ['id', 'name', 'email', 'senha'],
+        where: {
+            email: req.body.email
+        }
+    });
+
+    if (admin === null) {
+        return res.status(400).json({
+            erro: true,
+            mensagem: "Erro: Usuário ou a senha incorreta! Nenhum usuário com este e-mail!"
+        });
+    };
+
+    if(!(await bcrypt.compare(req.body.senha, admin.senha))) {
+        return res.status(400).json({
+            erro: true,
+            mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!"
+        });
+    };
+
+    let token = jwt.sign({id: admin.id}, "gGHe&4AaSd23%*7FAs5(fAG4G(GaF21As", {
+        expiresIn: 600 // 10 min
+        // expiresIn: 30 // 30 seg
+        // expiresIn: '7d' // 7 dias
+    });
+
+    return res.json({
+        erro: false,
+        mensagem: "Login realizado com sucesso",
+        token
+    });
+});
+
+
 
 // Exportar a função que está dentro da constante router
 module.exports = router;
