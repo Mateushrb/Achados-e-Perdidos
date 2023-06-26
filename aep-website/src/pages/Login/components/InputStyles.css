@@ -1,0 +1,30 @@
+.input__container {
+    border:  1px solid #eeee;
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    background-color: #eeee;
+    transition: 0.2s;
+}
+
+.input__container:focus,
+.input__container:hover {
+    outline: none;
+    border-color: #373896;
+    background: #fff;
+    box-shadow: #4f51d6;
+}
+
+.label {
+    display: block;
+    font-size: 1rem;
+    line-height: 1;
+    padding-bottom: 0.5rem;
+}
+
+.input__error {
+    color: #f31;
+    font-size: .875rem;
+    margin-top: .25rem;
+}
