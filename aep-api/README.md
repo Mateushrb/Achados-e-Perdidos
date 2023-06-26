@@ -39,13 +39,13 @@ Fazer login: POST http://localhost:8080/administradores/login
 (Requer login) Apagar administrador: DELETE http://localhost:8080/administradores/id  
 
 Achados  
-Cadastrar achados: POST http://localhost:8080/achados  
+(Requer login) Cadastrar achados: POST http://localhost:8080/achados  
 Listar achados: GET http://localhost:8080/achados?page=1  
 (Requer login) Editar achados: PUT http://localhost:8080/achados/id  
 (Requer login) Apagar achados: DELETE http://localhost:8080/achados/id  
 
 Perdidos  
-Cadastrar perdidos: POST http://localhost:8080/perdidos  
+(Requer login) Cadastrar perdidos: POST http://localhost:8080/perdidos  
 Listar perdidos: GET http://localhost:8080/perdidos?page=1  
 (Requer login) Editar perdidos: PUT http://localhost:8080/perdidos/id  
 (Requer login) Apagar perdidos: DELETE http://localhost:8080/perdidos/id  
