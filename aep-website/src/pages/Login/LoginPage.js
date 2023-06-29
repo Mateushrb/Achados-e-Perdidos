@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import './LoginStyles.css';
 import Header from '../../components/Header/Header';
-import Content from '../../components/Content/Content';
 import Footer from '../../components/Footer/Footer';
 import WhatsAppButton from '../../components/WhatsAppButton/WhatsAppButton';
 import Cookie from '../../components/Cookies/Cookies';
