@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './ModalStyles.css'
 import Input from '../../../../Login/components/Input';
 import Button from '../../../../Login/components/Button';
 

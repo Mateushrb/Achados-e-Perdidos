@@ -28,6 +28,10 @@
   list-style-type: none;
 }
 
+.menu__group.active a {
+  background-color: #1ddb0b;
+}
+
 .dashboar__paragraph {
   font-size: 28px;
   font-weight: 700;

@@ -2,6 +2,7 @@
     border:  1px solid #eeee;
     display: block;
     width: 100%;
+    max-width: 541px;
     padding: 0.8rem;
     border-radius: 0.4rem;
     background-color: #eeee;

@@ -37,7 +37,7 @@ const EditAchados = ({ item, onUpdate, onClose, buttonCancel }) => {
         <>
         {}
             <div className='content__edit'>
-                <h2>Editar Produto</h2>
+                <h2>Editar item achados</h2>
                 <form className='form__content-edit'>
                     <label>
                         Item:
@@ -67,6 +67,7 @@ const EditAchados = ({ item, onUpdate, onClose, buttonCancel }) => {
                             value={editedItem.quem_achou || ''}
                             onChange={handleInputChange} />
                     </label>
+                    <div className='group__time-option'>
                     <label>
                         Hora aproximada:
                         <Input type="time"
@@ -74,13 +75,13 @@ const EditAchados = ({ item, onUpdate, onClose, buttonCancel }) => {
                             value={editedItem.hora_aproximada || ''}
                             onChange={handleInputChange} />
                     </label>
-                    <label>
-                        Dono encontrado:
-                        <Input type="text"
-                            name="dono_encontrado"
-                            value={editedItem.dono_encontrado || ''}
-                            onChange={handleInputChange} />
-                    </label>
+                    <label for="option-input">Dono encontrado: </label>
+                    <select className='option-additem' id="option-input">
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="yes"> Sim</option>
+                        <option value="no"> Não</option>
+                    </select>
+                </div>
                     <div className="button-group">
                         <Button className='button__save' onClick={handleUpdate} type="submit">Salvar</Button>
                         <Button className='button__cancel' onClick={handleCancel} type="button">

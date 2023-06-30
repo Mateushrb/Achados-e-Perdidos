@@ -12,9 +12,9 @@
 
 .modal__content {
     background-color: #fff;
-    padding: 20px;
+    padding: 35px;
     border-radius: 4px;
-    max-width: 900px;
+    max-width: 570px;
     width: 100%;
     position: relative;
 }
@@ -25,6 +25,7 @@
 
 .modal__content p {
     margin-bottom: 10px;
+    text-align: left;
 }
 
 .modal__content button {
@@ -42,7 +43,7 @@
 }
 
 .modal__content .button-group {
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
     gap: 10px;
 }
@@ -70,11 +71,6 @@
     background-color: #fff;
 }
 
-.content__edit {
-    padding: 20px;
+.content__edit h2 {
+    margin: 40px 0;
 }
-
-.form__content-edit .input__container {
-    max-width: 833px;
-}
-

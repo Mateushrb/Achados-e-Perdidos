@@ -5,11 +5,15 @@ import Footer from '../../../../../components/Footer/Footer';
 import './AchadosStyles.css'
 import './ModalStyles.css'
 import EditAchados from './EditAchados';
+import ButtonAdd from './components/ButtonAdd';
+import ModalCadastrarAchados from './ModalCadastrarAchados';
+import CadastrarAchados from './CadastrarAchados';
 
 const ListarAchados = () => {
   const [data, setData] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
 
   useEffect(() => {
     fetch('http://45.235.53.125:8080/achados')
@@ -43,19 +47,34 @@ const ListarAchados = () => {
     console.log('Deletar produto:', selectedProduct);
   };
 
+  const openModalAdd = () => {
+    setIsOpenModalAdd(true);
+  }
+
+  const closeModalAdd = () => {
+    setIsOpenModalAdd(false);
+  };
+
   return (
     <>
       <DashboardAdmin />
       <div className='table__container-achados'>
         <h2>Lista de itens Achados 📄</h2>
         <div className='container_additem'>
-          <button className='button__addItem'>Cadastrar item Achados</button>
+          <ButtonAdd onClick={openModalAdd}>Adicionar item Achado</ButtonAdd>
+          {isOpenModalAdd && (
+            <ModalCadastrarAchados>
+              <button className='button__close' onClick={closeModalAdd}>X</button>
+              <CadastrarAchados />
+            </ModalCadastrarAchados>
+          )}
         </div>
         <table>
           <thead>
             <tr>
               <th>ID</th>
               <th>Item</th>
+              <th>Local</th>
               <th>Hora</th>
               <th>Quem achou</th>
             </tr>
@@ -65,6 +84,7 @@ const ListarAchados = () => {
               <tr key={item.id} onClick={() => handleProductClick(item)}>
                 <td>{item.id}</td>
                 <td>{item.nome_item}</td>
+                <td>{item.local}</td>
                 <td>{item.hora_aproximada}</td>
                 <td>{item.quem_achou}</td>
               </tr>

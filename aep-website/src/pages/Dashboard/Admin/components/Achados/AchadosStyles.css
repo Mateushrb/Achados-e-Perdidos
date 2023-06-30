@@ -21,6 +21,11 @@
   width: 100%;
 }
 
+.table__container-achados table tbody tr:hover {
+  background-color: #e4e4e4;
+  cursor: pointer;
+
+}
 
 .crud-container {
   max-width: 800px;
@@ -88,4 +93,13 @@ th {
 
 .container_additem {
   margin: 20px 0 10px;
+}
+
+.option-additem {
+  border: 1px solid #eeee;
+  display: block;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background-color: #eeee;
+  transition: 0.2s;
 }

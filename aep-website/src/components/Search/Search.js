@@ -1,6 +1,7 @@
 import React from 'react';
-import { RiSearchLine } from "react-icons/ri";
+import InputSearch from './components/InputSearch';
 import './searchStyles.css';
+
 
 const Search = ({ data }) => {
     // const [searchTerm, setSearchTerm] = useState('');
@@ -21,10 +22,7 @@ const Search = ({ data }) => {
     return (
         <div className="search-bar">
       <div className="search-bar__content">
-        <input type="text" className="search-bar__input" placeholder="Pesquisar..." />
-        <button type="submit" className="search-bar__button">
-          <RiSearchLine />
-        </button>
+        <InputSearch placeholder="Pesquisar" />
       </div>
     </div>
     );

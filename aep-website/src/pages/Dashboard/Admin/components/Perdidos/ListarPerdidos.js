@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import DashboardAdmin from '../../DashboardAdmin'
 import './PerdidosStyles.css'
-import './ModalStyles.css'
 import Footer from '../../../../../components/Footer/Footer';
 import EditarPerdidos from './EditarPerdidos';
+import ButtonAdd from '../Achados/components/ButtonAdd';
 
 
 const ListarPerdidos = () => {
@@ -49,6 +49,9 @@ const ListarPerdidos = () => {
       <DashboardAdmin />
       <div className='table__container-achados'>
         <h2>Lista de itens Perdidos 📄</h2>
+        <div className='container_additem'>
+        <ButtonAdd>Adicionar item Perdido</ButtonAdd>
+        </div>
         <table>
           <thead>
             <tr>

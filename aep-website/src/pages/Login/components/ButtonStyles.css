@@ -9,6 +9,8 @@
     box-sizing: border-box;
     transition: 0.1s;
     min-width: 8rem;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
 .button__container:hover, 
