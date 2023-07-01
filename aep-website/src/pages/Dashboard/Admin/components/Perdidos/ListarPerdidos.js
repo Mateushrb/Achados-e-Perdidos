@@ -4,12 +4,15 @@ import './PerdidosStyles.css'
 import Footer from '../../../../../components/Footer/Footer';
 import EditarPerdidos from './EditarPerdidos';
 import ButtonAdd from '../Achados/components/ButtonAdd';
+import ModalCadastrarPerdidos from './ModalCadastrarPerdidos';
+import CadastrarPerdidos from './CadastrarPerdido';
 
 
 const ListarPerdidos = () => {
   const [data, setData] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
 
   useEffect(() => {
     fetch('http://45.235.53.125:8080/perdidos')
@@ -43,6 +46,13 @@ const ListarPerdidos = () => {
     console.log('Deletar produto:', selectedProduct);
   };
 
+  const openModalAdd = () => {
+    setIsOpenModalAdd(true);
+  }
+
+  const closeModalAdd = () => {
+    setIsOpenModalAdd(false);
+  };
 
   return (
     <>
@@ -50,7 +60,13 @@ const ListarPerdidos = () => {
       <div className='table__container-achados'>
         <h2>Lista de itens Perdidos 📄</h2>
         <div className='container_additem'>
-        <ButtonAdd>Adicionar item Perdido</ButtonAdd>
+        <ButtonAdd onClick={openModalAdd}>Adicionar item Perdido</ButtonAdd>
+        {isOpenModalAdd && (
+            <ModalCadastrarPerdidos>
+              <button className='button__close' onClick={closeModalAdd}>X</button>
+              <CadastrarPerdidos />
+            </ModalCadastrarPerdidos>
+          )}
         </div>
         <table>
           <thead>
