@@ -16,7 +16,7 @@ const ListarAchados = () => {
   const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
 
   useEffect(() => {
-    fetch('http://45.235.53.125:8080/achados')
+    fetch('http://45.235.53.125:8080/achados?page=1')
       .then((response) => response.json())
       .then((json) => setData(json.achados));
   }, []);

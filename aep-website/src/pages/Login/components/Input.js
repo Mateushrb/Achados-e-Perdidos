@@ -2,7 +2,7 @@ import React from 'react'
 import './InputStyles.css'
 
 
-const Input = ({ label, name, type, value, onChange, error, onBlur }) => {
+const Input = ({ label, name, type, value, onChange, error, onBlur,handleImageChange }) => {
   return (
     <div>
       <label htmlFor={name}>{label}</label>

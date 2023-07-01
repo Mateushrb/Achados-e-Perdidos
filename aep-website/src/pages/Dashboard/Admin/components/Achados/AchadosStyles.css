@@ -92,7 +92,7 @@ th {
 }
 
 .container_additem {
-  margin: 20px 0 10px;
+  margin: 30px 0 20px;
 }
 
 .option-additem {
@@ -102,4 +102,15 @@ th {
   border-radius: 0.4rem;
   background-color: #eeee;
   transition: 0.2s;
+}
+
+.button-group span {
+  font-size: 12px;
+}
+
+.group__time-option {
+  margin: 20px 0;
+  padding: 10px 0;
+  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
 }

@@ -5,16 +5,50 @@ import './AchadosStyles.css'
 
 const CadastrarAchados = ({ item }) => {
     const [AddItem, setAddItem] = useState({ ...item });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAddItem({ ...AddItem, [name]: value });
     };
 
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setAddItem((prevItem) => ({ ...prevItem, imagem: file }));
+      };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        fetch('http://45.235.53.125:8080/achados', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Novo item adicionado:', data);
+                // Realize as ações necessárias após adicionar o novo item
+            })
+            .catch((error) => {
+                console.error('Erro ao adicionar o item:', error);
+            })
+            .then((data) => {
+                console.log('Novo item adicionado:', data);
+                setIsSaved(true);
+            })
+            .finally(() => {
+                setIsSubmitting(false);
+            });
+    }
+
     return (
         <div className='content__edit'>
             <h2>Adicionar novo item</h2>
-            <form className='form__content-edit'>
+            <form className='form__content-edit' onSubmit={handleSubmit}>
                 <label>
                     Item:
                     <Input type="text"
@@ -43,7 +77,7 @@ const CadastrarAchados = ({ item }) => {
                         value={AddItem.quem_achou || ''}
                         onChange={handleInputChange} />
                 </label>
-                <div className='group__time-option'>
+                
                     <label>
                         Hora aproximada:
                         <Input type="time"
@@ -51,18 +85,20 @@ const CadastrarAchados = ({ item }) => {
                             value={AddItem.hora_aproximada || ''}
                             onChange={handleInputChange} />
                     </label>
-                    <label for="option-input">Dono encontrado: </label>
-                    <select className='option-additem' id="option-input">
-                        <option value="" disabled selected>Selecione uma opção</option>
-                        <option value="yes"> Sim</option>
-                        <option value="no"> Não</option>
-                    </select>
+                    <div className='group__time-option'>
+                    <label>Adicionar uma imagem:
+                        <Input
+                            type="file"
+                            name="imagem"
+                            onChange={handleImageChange}
+                        />
+                    </label>
                 </div>
                 <div className="button-group">
-                    <Button className='button__save' type="submit">Salvar</Button>
-                    <Button className='button__cancel' type="button">
-                        Cancelar
+                    <Button className='button__save' type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Salvando...' : 'Salvar'}
                     </Button>
+                    {isSaved && <span>Item salvo com sucesso!</span>}
                 </div>
             </form>
         </div >

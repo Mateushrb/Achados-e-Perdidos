@@ -46,6 +46,7 @@
     margin-top: 50px;
     display: flex;
     gap: 10px;
+    flex-direction: column;
 }
 
 .modal__content .button-group .button__edit {
@@ -54,6 +55,7 @@
 
 .modal__content .button-group .button__save {
     background-color: #4caf50;
+    max-width: 100px;
 }
 
 .modal__content .button-group .button__delete,
