@@ -78,3 +78,13 @@ th {
 .delete-button {
   background-color: #f44336;
 }
+
+.modal__detail p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.modal__detail p span {
+  font-size: 14px;
+  font-weight: 400;
+}

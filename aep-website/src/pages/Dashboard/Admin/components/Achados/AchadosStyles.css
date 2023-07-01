@@ -114,3 +114,8 @@ th {
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
 }
+
+.form__content-edit {
+  max-height: 500px;
+  overflow: auto;
+}

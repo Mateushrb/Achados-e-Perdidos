@@ -16,10 +16,11 @@ const CadastrarAchados = ({ item }) => {
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         setAddItem((prevItem) => ({ ...prevItem, imagem: file }));
-      };
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         fetch('http://45.235.53.125:8080/achados', {
             method: 'POST',
@@ -31,7 +32,6 @@ const CadastrarAchados = ({ item }) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Novo item adicionado:', data);
-                // Realize as ações necessárias após adicionar o novo item
             })
             .catch((error) => {
                 console.error('Erro ao adicionar o item:', error);
@@ -54,44 +54,49 @@ const CadastrarAchados = ({ item }) => {
                     <Input type="text"
                         name="nome_item"
                         value={AddItem.nome_item || ''}
-                        onChange={handleInputChange} />
+                        onChange={handleInputChange}
+                        required />
                 </label>
                 <label>
                     Descrição:
                     <Input type="text"
                         name="descricao"
                         value={AddItem.descricao || ''}
-                        onChange={handleInputChange} />
+                        onChange={handleInputChange}
+                        required />
                 </label>
                 <label>
                     Local:
                     <Input type="text"
                         name="local"
                         value={AddItem.local || ''}
-                        onChange={handleInputChange} />
+                        onChange={handleInputChange}
+                        required />
                 </label>
                 <label>
                     Quem achou:
                     <Input type="text"
                         name="quem_achou"
                         value={AddItem.quem_achou || ''}
-                        onChange={handleInputChange} />
+                        onChange={handleInputChange}
+                        required />
                 </label>
-                
-                    <label>
-                        Hora aproximada:
-                        <Input type="time"
-                            name="hora_aproximada"
-                            value={AddItem.hora_aproximada || ''}
-                            onChange={handleInputChange} />
-                    </label>
-                    <div className='group__time-option'>
+
+                <label>
+                    Hora aproximada:
+                    <Input type="time"
+                        name="hora_aproximada"
+                        value={AddItem.hora_aproximada || ''}
+                        onChange={handleInputChange}
+                        required />
+                </label>
+                <div className='group__time-option'>
                     <label>Adicionar uma imagem:
                         <Input
                             type="file"
                             name="imagem"
                             onChange={handleImageChange}
-                        />
+                            required />
                     </label>
                 </div>
                 <div className="button-group">

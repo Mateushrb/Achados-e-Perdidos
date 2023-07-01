@@ -37,16 +37,11 @@
     cursor: pointer;
 }
 
-.modal__detail p {
-    display: flex;
-    align-items: flex-start;
-}
-
 .modal__content .button-group {
     margin-top: 50px;
     display: flex;
     gap: 10px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .modal__content .button-group .button__edit {

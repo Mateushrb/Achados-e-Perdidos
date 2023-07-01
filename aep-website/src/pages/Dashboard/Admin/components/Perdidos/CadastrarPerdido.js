@@ -16,7 +16,7 @@ const CadastrarPerdidos = ({ item }) => {
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         setAddItem((prevItem) => ({ ...prevItem, imagem: file }));
-      };
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,14 +54,16 @@ const CadastrarPerdidos = ({ item }) => {
                     <Input type="text"
                         name="nome_item"
                         value={AddItem.nome_item || ''}
-                        onChange={handleInputChange} />
+                        onChange={handleInputChange}
+                        required />
                 </label>
                 <label>
                     Descrição:
                     <Input type="text"
                         name="descricao"
                         value={AddItem.descricao || ''}
-                        onChange={handleInputChange} />
+                        onChange={handleInputChange}
+                        required />
                 </label>
                 <label>
                     Local:
@@ -71,27 +73,44 @@ const CadastrarPerdidos = ({ item }) => {
                         onChange={handleInputChange} />
                 </label>
                 <label>
-                    Quem achou:
+                    Quem perdeu:
                     <Input type="text"
-                        name="quem_achou"
-                        value={AddItem.quem_achou || ''}
-                        onChange={handleInputChange} />
+                        name="quem_perdeu"
+                        value={AddItem.nome || ''}
+                        onChange={handleInputChange}
+                        required />
                 </label>
-                
-                    <label>
-                        Hora aproximada:
-                        <Input type="time"
-                            name="hora_aproximada"
-                            value={AddItem.hora_aproximada || ''}
-                            onChange={handleInputChange} />
-                    </label>
-                    <div className='group__time-option'>
+                <label>
+                    E-mail:
+                    <Input type="text"
+                        name="email"
+                        value={AddItem.email || ''}
+                        onChange={handleInputChange}
+                        required />
+                </label>
+                <label>
+                    Telefone:
+                    <Input type="text"
+                        name="telefone"
+                        value={AddItem.telefone || ''}
+                        onChange={handleInputChange}
+                        required />
+                </label>
+                <label>
+                    Hora aproximada:
+                    <Input type="time"
+                        name="hora_aproximada"
+                        value={AddItem.hora_aproximada || ''}
+                        onChange={handleInputChange}
+                        required />
+                </label>
+                <div className='group__time-option'>
                     <label>Adicionar uma imagem:
                         <Input
                             type="file"
                             name="imagem"
                             onChange={handleImageChange}
-                        />
+                            required />
                     </label>
                 </div>
                 <div className="button-group">

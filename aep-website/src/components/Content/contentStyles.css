@@ -6,6 +6,9 @@
   margin: 0 auto;
   padding: 0 0 30px;
   width: 100%;
+}
+
+.container-main {
   height: 100vh;
 }
 
@@ -42,7 +45,7 @@
   font-size: 14px;
   line-height: 21px;
   text-align: left;
-  color: #656565;
+  color: #161615;
 }
 
 .item__descricao-text {
@@ -59,4 +62,8 @@
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+.container__name-text {
+  height: 157px;
 }

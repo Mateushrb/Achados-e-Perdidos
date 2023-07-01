@@ -59,9 +59,9 @@ const ListarAchados = () => {
     <>
       <DashboardAdmin />
       <div className='table__container-achados'>
-        <h2>Lista de itens Achados 📄</h2>
+        <h2>Lista de itens achados 📄</h2>
         <div className='container_additem'>
-          <ButtonAdd onClick={openModalAdd}>Adicionar item Achado</ButtonAdd>
+          <ButtonAdd onClick={openModalAdd}>Adicionar item achado</ButtonAdd>
           {isOpenModalAdd && (
             <ModalCadastrarAchados>
               <button className='button__close' onClick={closeModalAdd}>X</button>
@@ -101,13 +101,13 @@ const ListarAchados = () => {
                   ) : (
                     <>
                       <h3>Detalhes do produto</h3><div className='modal__detail'>
-                        <p>Id: {selectedProduct.id}</p>
-                        <p>Item: {selectedProduct.nome_item}</p>
-                        <p>Descrição: {selectedProduct.descricao}</p>
-                        <p>local: {selectedProduct.local}</p>
-                        <p>Quem achou: {selectedProduct.quem_achou}</p>
-                        <p>Hora aproximada: {selectedProduct.hora_aproximada}</p>
-                        <p>Dono encontrado: {selectedProduct.dono_encontrado}</p>
+                        <p>Id: <span>{selectedProduct.id}</span></p>
+                        <p>Item: <span>{selectedProduct.nome_item}</span></p>
+                        <p>Descrição: <span>{selectedProduct.descricao}</span></p>
+                        <p>local: <span>{selectedProduct.local}</span></p>
+                        <p>Quem achou: <span>{selectedProduct.quem_achou}</span></p>
+                        <p>Hora aproximada: <span>{selectedProduct.hora_aproximada}</span></p>
+                        <p>Dono encontrado: <span>{selectedProduct.dono_encontrado}</span></p>
                       </div>
                       <div className="button-group">
                         <button className="button__edit" onClick={handleEdit}>Editar</button>

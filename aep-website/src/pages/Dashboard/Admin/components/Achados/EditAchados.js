@@ -67,7 +67,6 @@ const EditAchados = ({ item, onUpdate, onClose, buttonCancel }) => {
                             value={editedItem.quem_achou || ''}
                             onChange={handleInputChange} />
                     </label>
-                    <div className='group__time-option'>
                     <label>
                         Hora aproximada:
                         <Input type="time"
@@ -75,6 +74,7 @@ const EditAchados = ({ item, onUpdate, onClose, buttonCancel }) => {
                             value={editedItem.hora_aproximada || ''}
                             onChange={handleInputChange} />
                     </label>
+                    <div className='group__time-option'>
                     <label for="option-input">Dono encontrado: </label>
                     <select className='option-additem' id="option-input">
                         <option value="" disabled selected>Selecione uma opção</option>
