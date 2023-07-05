@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import DashboardAdmin from '../../DashboardAdmin'
 import Footer from '../../../../../components/Footer/Footer';
 
@@ -8,6 +9,7 @@ import EditAchados from './EditAchados';
 import ButtonAdd from './components/ButtonAdd';
 import ModalCadastrarAchados from './ModalCadastrarAchados';
 import CadastrarAchados from './CadastrarAchados';
+import API from '../../../../../services/api';
 
 const ListarAchados = () => {
   const [data, setData] = useState([]);
@@ -15,18 +17,31 @@ const ListarAchados = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetch('http://45.235.53.125:8080/achados?page=1')
-      .then((response) => response.json())
-      .then((json) => setData(json.achados));
-  }, []);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Usuário não está autenticado, redirecionar para a página de login
+      navigate('/');
+    }
+
+    API.getAchados().then((response) => response.json())
+      .then((data) => setData(data.achados))
+      .catch((error) => console.log(error))
+
+  }, [navigate]);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
   };
 
+
   const closeModal = () => {
-    setSelectedProduct(null);
+    setSelectedProduct(null)
+    API.getAchados().then((response) => response.json())
+      .then((data) => setData(data.achados))
+      .catch((error) => console.log(error))
   };
 
   const handleEdit = () => {
@@ -97,7 +112,7 @@ const ListarAchados = () => {
               <div className='modal__table'>
                 <div className='modal__content'>
                   {isEditing ? (
-                    <EditAchados product={selectedProduct} onSave={handleSave} onCancel={handleCancel} />
+                    <EditAchados productData={selectedProduct} onSave={handleSave} onCancel={handleCancel} onClose={closeModal} />
                   ) : (
                     <>
                       <h3>Detalhes do produto</h3><div className='modal__detail'>
@@ -107,7 +122,6 @@ const ListarAchados = () => {
                         <p>local: <span>{selectedProduct.local}</span></p>
                         <p>Quem achou: <span>{selectedProduct.quem_achou}</span></p>
                         <p>Hora aproximada: <span>{selectedProduct.hora_aproximada}</span></p>
-                        <p>Dono encontrado: <span>{selectedProduct.dono_encontrado}</span></p>
                       </div>
                       <div className="button-group">
                         <button className="button__edit" onClick={handleEdit}>Editar</button>

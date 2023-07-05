@@ -10,8 +10,8 @@ import ListarAchados from '../pages/Dashboard/Admin/components/Achados/ListarAch
 import CadastrarAchados from '../pages/Dashboard/Admin/components/Achados/CadastrarAchados'
 import CadastrarPerdidos from '../pages/Dashboard/Admin/components/Perdidos/CadastrarPerdido'
 
-
 const AppRoutes = () => {
+
     return (
         <BrowserRouter>
             <Routes>
@@ -21,7 +21,7 @@ const AppRoutes = () => {
 
                 {/* ROTA PARA PAINEL DO ADMIN */}
 
-                <Route path="/dashboard/admin" element={<DashboardAdmin />} />
+                <Route path="/dashboard/admin" element={<DashboardAdmin/>} />
                 <Route path="/dashboard/admin/listar-perdidos" element={<ListarPerdidos />} />
                 <Route path="/dashboard/admin/listar-achados" element={<ListarAchados />} />
                 <Route path="/dashboard/admin/cadastrar-achados" element={<CadastrarAchados />} />

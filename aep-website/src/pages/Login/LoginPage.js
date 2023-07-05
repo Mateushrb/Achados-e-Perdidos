@@ -23,7 +23,7 @@ const AdminLogin = () => {
     event.preventDefault();
 
     // Envia as credenciais para o servidor backend
-    fetch('/login/admin', {
+    fetch('/administradores/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
