@@ -2,58 +2,38 @@ import React, { useState } from 'react'
 import Input from '../../../../Login/components/Input';
 import Button from '../../../../Login/components/Button';
 import '../Achados/AchadosStyles.css'
+import API from '../../../../../services/api';
 
-const CadastrarPerdidos = ({ item }) => {
-    const [AddItem, setAddItem] = useState({ ...item });
+const CadastrarPerdidos = (props) => {
+    const {
+        productData,
+        onCancel,
+        onClose,
+    } = props
+    const [product, setProduct] = useState({ ...productData});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setAddItem({ ...AddItem, [name]: value });
+        setProduct({ ...product, [name]: value });
     };
 
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        setAddItem((prevItem) => ({ ...prevItem, imagem: file }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        fetch('http://45.235.53.125:8080/perdidos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(item),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Novo item adicionado:', data);
-                // Realize as ações necessárias após adicionar o novo item
-            })
-            .catch((error) => {
-                console.error('Erro ao adicionar o item:', error);
-            })
-            .then((data) => {
-                console.log('Novo item adicionado:', data);
-                setIsSaved(true);
-            })
-            .finally(() => {
-                setIsSubmitting(false);
-            });
+    const handlePost = () => {
+        API.postPerdido(product)
+            .then(() => onClose())
+            .catch((error) => console.log(error))
     }
 
     return (
         <div className='content__edit'>
             <h2>Adicionar novo item</h2>
-            <form className='form__content-edit' onSubmit={handleSubmit}>
+            <form className='form__content-edit' onSubmit={handlePost}>
                 <label>
                     Item:
                     <Input type="text"
                         name="nome_item"
-                        value={AddItem.nome_item || ''}
+                        value={product.nome_item || ''}
                         onChange={handleInputChange}
                         required />
                 </label>
@@ -61,7 +41,7 @@ const CadastrarPerdidos = ({ item }) => {
                     Descrição:
                     <Input type="text"
                         name="descricao"
-                        value={AddItem.descricao || ''}
+                        value={product.descricao || ''}
                         onChange={handleInputChange}
                         required />
                 </label>
@@ -69,14 +49,14 @@ const CadastrarPerdidos = ({ item }) => {
                     Local:
                     <Input type="text"
                         name="local"
-                        value={AddItem.local || ''}
+                        value={product.local || ''}
                         onChange={handleInputChange} />
                 </label>
                 <label>
                     Quem perdeu:
                     <Input type="text"
-                        name="quem_perdeu"
-                        value={AddItem.nome || ''}
+                        name="nome"
+                        value={product.nome || ''}
                         onChange={handleInputChange}
                         required />
                 </label>
@@ -84,7 +64,7 @@ const CadastrarPerdidos = ({ item }) => {
                     E-mail:
                     <Input type="text"
                         name="email"
-                        value={AddItem.email || ''}
+                        value={product.email || ''}
                         onChange={handleInputChange}
                         required />
                 </label>
@@ -92,7 +72,7 @@ const CadastrarPerdidos = ({ item }) => {
                     Telefone:
                     <Input type="text"
                         name="telefone"
-                        value={AddItem.telefone || ''}
+                        value={product.telefone || ''}
                         onChange={handleInputChange}
                         required />
                 </label>
@@ -100,24 +80,18 @@ const CadastrarPerdidos = ({ item }) => {
                     Hora aproximada:
                     <Input type="time"
                         name="hora_aproximada"
-                        value={AddItem.hora_aproximada || ''}
+                        value={product.hora_aproximada || ''}
                         onChange={handleInputChange}
                         required />
                 </label>
-                <div className='group__time-option'>
-                    <label>Adicionar uma imagem:
-                        <Input
-                            type="file"
-                            name="imagem"
-                            onChange={handleImageChange}
-                            required />
-                    </label>
-                </div>
                 <div className="button-group">
                     <Button className='button__save' type="submit" disabled={isSubmitting}>
                         {isSubmitting ? 'Salvando...' : 'Salvar'}
                     </Button>
                     {isSaved && <span>Item salvo com sucesso!</span>}
+                    <Button className="button__cancel" onClick={onCancel} type="button">
+                        Cancelar
+                    </Button>
                 </div>
             </form>
         </div >

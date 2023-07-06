@@ -1,47 +1,37 @@
 import React, { useState } from 'react';
 import Input from '../../../../Login/components/Input';
 import Button from '../../../../Login/components/Button';
+import API from '../../../../../services/api';
 
-const EditarPerdidos = ({ item, onUpdate, onClose, buttonCancel }) => {
-    const [editedItem, setEditedItem] = useState({ ...item });
+const EditarPerdidos = (props) => {
+    const {
+        productData,
+        onCancel,
+        onClose,
+    } = props
+    const [product, setProduct] = useState({ ...productData });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setEditedItem({ ...editedItem, [name]: value });
+        setProduct({ ...product, [name]: value });
     };
 
     const handleUpdate = () => {
-        fetch(`/perdidos/${item.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(editedItem),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                onUpdate(data);
-                onClose();
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-
-    const handleCancel = () => {
-        buttonCancel();
-    };
+        API.updatePerdidos(product.id, product)
+            .then(() => onClose())
+            .catch((error) => console.log(error))
+    }
 
     return (
         <div className="content__edit">
-            <h2>Editar Produto</h2>
+            <h2>Editar item perdidos</h2>
             <form className="form__content-edit" onSubmit={handleUpdate}>
                 <label>
                     Item:
                     <Input
                         type="text"
                         name="nome_item"
-                        value={editedItem.nome_item || ''}
+                        value={product.nome_item || ''}
                         onChange={handleInputChange}
                     />
                 </label>
@@ -50,34 +40,23 @@ const EditarPerdidos = ({ item, onUpdate, onClose, buttonCancel }) => {
                     <Input
                         type="text"
                         name="descricao"
-                        value={editedItem.descricao || ''}
+                        value={product.descricao || ''}
                         onChange={handleInputChange}
                     />
                 </label>
                 <label>
-                    Local:
-                    <Input
-                        type="text"
-                        name="local"
-                        value={editedItem.local || ''}
-                        onChange={handleInputChange}
-                    />
-                </label>
-                <label>
-                    Quem perdeu:
-                    <Input
-                        type="text"
-                        name="quem_perdeu"
-                        value={editedItem.nome || ''}
-                        onChange={handleInputChange}
-                    />
-                </label>
+                        Quem achou:
+                        <Input type="text"
+                            name="nome"
+                            value={product.nome || ''}
+                            onChange={handleInputChange} />
+                    </label>
                 <label>
                     E-mail:
                     <Input
                         type="text"
                         name="email"
-                        value={editedItem.email || ''}
+                        value={product.email || ''}
                         onChange={handleInputChange}
                     />
                 </label>
@@ -86,7 +65,7 @@ const EditarPerdidos = ({ item, onUpdate, onClose, buttonCancel }) => {
                     <Input
                         type="text"
                         name="telefone"
-                        value={editedItem.telefone || ''}
+                        value={product.telefone || ''}
                         onChange={handleInputChange}
                     />
                 </label>
@@ -94,22 +73,12 @@ const EditarPerdidos = ({ item, onUpdate, onClose, buttonCancel }) => {
                         Hora aproximada:
                         <Input type="time"
                             name="hora_aproximada"
-                            value={editedItem.hora_aproximada || ''}
+                            value={product.hora_aproximada || ''}
                             onChange={handleInputChange} />
                     </label>
-                    <div className='group__time-option'>
-                    <label for="option-input">Dono encontrado: </label>
-                    <select className='option-additem' id="option-input">
-                        <option value="" disabled selected>Selecione uma opção</option>
-                        <option value="yes"> Sim</option>
-                        <option value="no"> Não</option>
-                    </select>
-                </div>
                 <div className="button-group">
-                    <Button className="button__save" type="submit">
-                        Salvar
-                    </Button>
-                    <Button className="button__cancel" onClick={handleCancel} type="button">
+                    <Button className="button__save" onClick={handleUpdate} type="button">Salvar</Button>
+                    <Button className="button__cancel" onClick={onCancel} type="button">
                         Cancelar
                     </Button>
                 </div>

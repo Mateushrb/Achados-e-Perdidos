@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DashboardAdmin from '../../DashboardAdmin'
 import './PerdidosStyles.css'
 import Footer from '../../../../../components/Footer/Footer';
@@ -6,6 +7,7 @@ import EditarPerdidos from './EditarPerdidos';
 import ButtonAdd from '../Achados/components/ButtonAdd';
 import ModalCadastrarPerdidos from './ModalCadastrarPerdidos';
 import CadastrarPerdidos from './CadastrarPerdido';
+import API from '../../../../../services/api';
 
 
 const ListarPerdidos = () => {
@@ -14,18 +16,30 @@ const ListarPerdidos = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetch('http://45.235.53.125:8080/perdidos?page=1')
-      .then((response) => response.json())
-      .then((json) => setData(json.perdidos));
-  }, []);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Usuário não está autenticado, redirecionar para a página de login
+      navigate('/');
+    }
+
+    API.getPerdidos().then((response) => response.json())
+    .then((data) => setData(data.perdidos))
+    .catch((error) => console.log(error))
+  }, [navigate]);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
   };
 
   const closeModal = () => {
-    setSelectedProduct(null);
+    setSelectedProduct(null)
+    API.getPerdidos()
+      .then((response) => response.json())
+      .then((data) => setData(data.perdidos))
+      .catch((error) => console.log(error))
   };
 
   const handleEdit = () => {
@@ -42,9 +56,14 @@ const ListarPerdidos = () => {
     setIsEditing(false);
   };
 
-  const handleDelete = () => {
-    console.log('Deletar produto:', selectedProduct);
-  };
+  const handleDelete = (id) => {
+    API.deletePerdidos(id)
+      .then((response) => response.json())
+      .then((data) => {
+        return setData(data.perdidos)
+      })
+      .catch((error) => console.log(error))
+    };
 
   const openModalAdd = () => {
     setIsOpenModalAdd(true);
@@ -60,8 +79,8 @@ const ListarPerdidos = () => {
       <div className='table__container-achados'>
         <h2>Lista de itens Perdidos 📄</h2>
         <div className='container_additem'>
-        <ButtonAdd onClick={openModalAdd}>Adicionar item perdido</ButtonAdd>
-        {isOpenModalAdd && (
+          <ButtonAdd onClick={openModalAdd}>Adicionar item perdido</ButtonAdd>
+          {isOpenModalAdd && (
             <ModalCadastrarPerdidos>
               <button className='button__close' onClick={closeModalAdd}>X</button>
               <CadastrarPerdidos />
@@ -92,12 +111,12 @@ const ListarPerdidos = () => {
             ))}
           </tbody>
           {/* MODAL  */}
-          {selectedProduct && (
+          {selectedProduct &&  (
             <>
               <div className='modal__table'>
                 <div className='modal__content'>
-                  {isEditing ? (
-                    <EditarPerdidos product={selectedProduct} onSave={handleSave} onCancel={handleCancel} />
+                  {isEditing ?  (
+                    <EditarPerdidos productData={selectedProduct} onSave={handleSave} onCancel={handleCancel} onClose={closeModal} />
                   ) : (
                     <>
                       <h3>Detalhes do produto</h3><div className='modal__detail'>
@@ -107,11 +126,10 @@ const ListarPerdidos = () => {
                         <p>Quem perdeu: <span>{selectedProduct.nome}</span></p>
                         <p>E-mail: <span>{selectedProduct.email}</span></p>
                         <p>Telefone: <span>{selectedProduct.telefone}</span></p>
-                        <p>Item encontrado: <span>{selectedProduct.item_encontrado}</span></p>
                       </div>
                       <div className="button-group">
                         <button className="button__edit" onClick={handleEdit}>Editar</button>
-                        <button className='button__delete' onClick={handleDelete}>Deletar</button>
+                        <button className='button__delete' onClick={() => handleDelete(selectedProduct.id)}>Deletar</button>
                       </div>
                     </>
                   )}

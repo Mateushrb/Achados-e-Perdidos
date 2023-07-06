@@ -10,11 +10,11 @@ const EditAchados = (props) => {
         onCancel,
         onClose,
     } = props
-    const [product, setproduct] = useState({ ...productData });
+    const [product, setProduct] = useState({ ...productData });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setproduct({ ...product, [name]: value });
+        setProduct({ ...product, [name]: value });
     };
 
     const handleUpdate = () => {
@@ -27,7 +27,7 @@ const EditAchados = (props) => {
         <>
             <div className='content__edit'>
                 <h2>Editar item achados</h2>
-                <form className='form__content-edit'>
+                <form className='form__content-edit' onSubmit={handleUpdate}>
                     <label>
                         Item:
                         <Input type="text"
@@ -70,14 +70,6 @@ const EditAchados = (props) => {
                             value={product.hora_aproximada || ''}
                             onChange={handleInputChange} />
                     </label>
-                    {/* <div className='group__time-option'>
-                    <label for="option-input">Dono encontrado: </label>
-                    <select className='option-additem' id="option-input">
-                        <option value="" disabled selected>Selecione uma opção</option>
-                        <option value="yes"> Sim</option>
-                        <option value="no"> Não</option>
-                    </select>
-                </div> */}
                     <div className="button-group">
                         <Button className='button__save' onClick={handleUpdate} type="button">Salvar</Button>
                         <Button className='button__cancel' onClick={onCancel} type="button">

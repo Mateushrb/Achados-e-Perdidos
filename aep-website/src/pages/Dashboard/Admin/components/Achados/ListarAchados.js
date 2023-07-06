@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import DashboardAdmin from '../../DashboardAdmin'
 import Footer from '../../../../../components/Footer/Footer';
-
 import './AchadosStyles.css'
 import './ModalStyles.css'
 import EditAchados from './EditAchados';
@@ -29,17 +28,16 @@ const ListarAchados = () => {
     API.getAchados().then((response) => response.json())
       .then((data) => setData(data.achados))
       .catch((error) => console.log(error))
-
   }, [navigate]);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
   };
 
-
   const closeModal = () => {
     setSelectedProduct(null)
-    API.getAchados().then((response) => response.json())
+    API.getAchados()
+      .then((response) => response.json())
       .then((data) => setData(data.achados))
       .catch((error) => console.log(error))
   };
