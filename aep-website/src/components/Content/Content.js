@@ -6,7 +6,7 @@ const Content = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://45.235.53.125:8080/achados?page=1')
+    fetch('url da api/achados?page=1')
       .then((response) => response.json())
       .then((json) => setData(json.achados));
   }, []);
