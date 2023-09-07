@@ -22,7 +22,7 @@ const CadastrarAchados = ({ item }) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        fetch('http://45.235.53.125:8080/achados', {
+        fetch('url da api/achados', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
