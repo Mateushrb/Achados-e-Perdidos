@@ -13,7 +13,7 @@ const createOptions = (method, data = null) => {
 }
 
 class API {
-    static URL = "http://45.235.53.125:8080"
+    static URL = "url da api"
     static updateAchados = (id, data) => fetch(`${this.URL}/achados/${id}`, createOptions('PUT', data))
     static updatePerdidos = (id, data) => fetch(`${this.URL}/perdidos/${id}`, createOptions('PUT', data))
     static getAchados = () => fetch(`${this.URL}/achados?page=1`, createOptions('GET'))
