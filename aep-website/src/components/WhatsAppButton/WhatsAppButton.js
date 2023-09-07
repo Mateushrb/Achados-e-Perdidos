@@ -4,7 +4,7 @@ import "./WhatsAppButtonStyles.css";
 
 const WhatsAppButton = () => {
   const handleClick = () => {
-    window.location.href = `https://wa.me/${48998117717}`;
+    window.location.href = `https://wa.me/${48912345678}`;
   };
 
   return (
