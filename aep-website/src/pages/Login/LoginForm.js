@@ -21,7 +21,7 @@ const LoginForm = () => {
         senha: password.value
       };
 
-      axios.post('http://45.235.53.125:8080/administradores/login', data)
+      axios.post('url da api/administradores/login', data)
         .then((res) => {
           console.log(res.data);
 
